@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Friends Chat – Premium</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="welcome">
+  <div class="hero">
+    <h1>Friends Chat</h1>
+    <p>Instant rooms. Zero login. Just share & chat.</p>
+
+    <ul class="features">
+      <li>⚡ Real‑time chat with friends</li>
+      <li>🔗 Shareable private rooms</li>
+      <li>🚫 No login, no signup</li>
+      <li>🎨 Clean premium UI</li>
+      <li>🔔 Join & leave alerts</li>
+      <li>📱 Fully responsive</li>
+    </ul>
+
+    <button id="createRoom">Create Chat Room</button>
+  </div>
+
+  <script>
+    document.getElementById("createRoom").onclick = () => {
+      const room = Math.random().toString(36).substring(2, 8);
+      window.location.href = `chat.html?room=${room}`;
+    };
+  </script>
+</body>
+</html>
