@@ -3,37 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Friends Chat</title>
+<title>FriendsChat</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="welcome">
+<body>
 
-<div class="welcome-card">
-  <h1>Friends Chat 💬</h1>
-  <p class="subtitle">
-    Create a private room, share the link, and start chatting instantly.
-    No login. No tracking. Just vibes.
+<header class="nav">
+  <div class="brand">FriendsChat</div>
+  <nav>
+    <span>No Login</span>
+    <span>Private Rooms</span>
+    <span>Free</span>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <h1>
+    A simple place<br>
+    to talk with friends
+  </h1>
+
+  <p>
+    Create a private room, share the link, and chat instantly.
+    No accounts. No tracking. Built for focus.
   </p>
 
-  <div class="feature-grid">
-    <div>⚡ Real-time messaging</div>
-    <div>😄 Emoji picker</div>
-    <div>❤️ Message reactions</div>
-    <div>⏰ Message timestamps</div>
-    <div>🔗 Shareable room link</div>
-    <div>📱 Mobile responsive</div>
-    <div>🚫 No signup</div>
-    <div>🔒 Private rooms</div>
-  </div>
-
-  <div class="steps">
-    <div><span>1</span>Create a room</div>
-    <div><span>2</span>Share link</div>
-    <div><span>3</span>Chat instantly</div>
-  </div>
-
   <button onclick="createRoom()">Create Chat Room</button>
-</div>
+
+  <div class="trust">
+    🔒 Private rooms · ⚡ Real-time · 📱 Fully responsive
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <h3>Instant Rooms</h3>
+    <p>Create a room in one click. Share a link. Start chatting.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Private by Design</h3>
+    <p>Rooms are not public. Only people with the link can join.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Clean Interface</h3>
+    <p>Minimal UI that keeps the focus on conversation.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Works Everywhere</h3>
+    <p>Optimized for mobile, tablet, and desktop screens.</p>
+  </div>
+</section>
+
+<section class="steps">
+  <div><span>1</span>Create a room</div>
+  <div><span>2</span>Share the link</div>
+  <div><span>3</span>Start chatting</div>
+</section>
+
+<footer class="footer">
+  Built for friends · No login · No distractions
+</footer>
 
 <script>
 function createRoom() {
