@@ -6,24 +6,35 @@
 <title>Chat Room</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="chat-body">
+<body class="chat">
 
-<header class="top-bar">
-  <span id="roomCode"></span>
-  <input id="roomLink" readonly>
-</header>
+<div class="layout">
 
-<main id="messages"></main>
+  <aside class="sidebar">
+    <h4>Online</h4>
+    <ul id="users"></ul>
+  </aside>
 
-<div class="emoji-panel" id="emojiPanel">
-  😀 😍 😂 😭 😡 👍 👎 ❤️ 🔥 🎉 🤯
+  <section class="chat-area">
+
+    <header class="chat-header">
+      <div>
+        <h3 id="roomCode"></h3>
+        <small id="typing"></small>
+      </div>
+      <input id="roomLink" readonly>
+    </header>
+
+    <main id="messages"></main>
+
+    <form id="form" class="chat-input">
+      <input id="message" placeholder="Write a message…" autocomplete="off">
+      <button>Send</button>
+    </form>
+
+  </section>
+
 </div>
-
-<form id="form" class="chat-input">
-  <button type="button" id="emojiBtn">😄</button>
-  <input id="message" placeholder="Type a message..." autocomplete="off">
-  <button>Send</button>
-</form>
 
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="script.js"></script>
