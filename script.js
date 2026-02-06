@@ -1,4 +1,4 @@
-const socket = io("YOUR_RENDER_BACKEND_URL");
+const socket = io("https://friendchatb.onrender.com");
 
 const room = new URLSearchParams(location.search).get("room");
 const username = prompt("Your name") || "Guest";
