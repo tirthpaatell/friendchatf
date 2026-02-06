@@ -406,6 +406,38 @@ button {
 #toast.show {
   opacity: 1;
 }
+/* ROOM LINK COPY */
+.room-link-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-link-wrap input {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  max-width: 260px;
+}
+
+.room-link-wrap button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.room-link-wrap button:hover {
+  background: #f8fafc;
+}
+
+.room-link-wrap button:active {
+  transform: scale(.97);
+}
 
 /* =====================
    RESPONSIVE
