@@ -1,78 +1,66 @@
 const socket = io("https://friendchatb.onrender.com");
 
 const room = new URLSearchParams(location.search).get("room");
-const username = prompt("Your name") || "Guest";
+const username = prompt("Enter your name") || "Guest";
 
 socket.emit("join-room", { room, username });
 
-roomCode.textContent = "Room: " + room;
-roomLink.value = location.origin + "/chat.html?room=" + room;
+roomCode.textContent = `Room ${room}`;
+roomLink.value = location.href;
 
-emojiBtn.onclick = () => {
-  emojiPanel.classList.toggle("show");
-};
+let lastUser = null;
 
-emojiPanel.onclick = (e) => {
-  if (e.target.textContent.trim()) {
-    message.value += e.target.textContent;
-    emojiPanel.classList.remove("show");
-    message.focus();
-  }
-};
-
-form.onsubmit = e => {
+form.addEventListener("submit", e => {
   e.preventDefault();
   if (!message.value.trim()) return;
 
   socket.emit("chat-message", {
-    id: Date.now(),
     user: username,
-    text: message.value
+    text: message.value,
+    time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})
   });
 
   message.value = "";
-};
+  socket.emit("typing", false);
+});
+
+message.addEventListener("input", () => {
+  socket.emit("typing", message.value.length > 0);
+});
 
 socket.on("chat-message", msg => {
-  addMessage(msg);
-});
+  const grouped = msg.user === lastUser;
+  lastUser = msg.user;
 
-socket.on("system", msg => {
-  addSystem(msg);
-});
-
-socket.on("reaction", data => {
-  document.querySelector(`#msg-${data.id} .reactions`).textContent = data.reaction;
-});
-
-function addMessage(msg) {
   const div = document.createElement("div");
-  div.className = "bubble";
-  div.id = `msg-${msg.id}`;
+  div.className = grouped ? "bubble grouped" : "bubble";
 
-  div.innerHTML = `
-    <div class="text">${msg.user}: ${msg.text}</div>
-    <div class="meta">
-      <small>${msg.time}</small>
-      <div class="reactions">
-        <span onclick="react(${msg.id},'❤️')">❤️</span>
-        <span onclick="react(${msg.id},'😂')">😂</span>
-        <span onclick="react(${msg.id},'🔥')">🔥</span>
-        <span onclick="react(${msg.id},'👍')">👍</span>
+  div.innerHTML = grouped
+    ? `<p class="group-text">${msg.text}</p>`
+    : `
+      <div class="avatar">${msg.user[0].toUpperCase()}</div>
+      <div class="content">
+        <strong>${msg.user}</strong>
+        <small>${msg.time}</small>
+        <p>${msg.text}</p>
       </div>
-    </div>
-  `;
+    `;
+
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
-}
+});
 
-function addSystem(msg) {
+socket.on("users", list => {
+  users.innerHTML = list.map(u => `<li>${u}</li>`).join("");
+});
+
+socket.on("typing", data => {
+  typing.textContent = data.status ? `${data.user} is typing…` : "";
+});
+
+socket.on("system", text => {
   const div = document.createElement("div");
   div.className = "system";
-  div.textContent = `${msg.text} • ${msg.time}`;
+  div.textContent = text;
   messages.appendChild(div);
-}
-
-function react(id, emoji) {
-  socket.emit("reaction", { id, reaction: emoji });
-}
+});
