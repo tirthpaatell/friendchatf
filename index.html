@@ -1,33 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Friends Chat – Premium</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friends Chat</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body class="welcome">
-  <div class="hero">
-    <h1>Friends Chat</h1>
-    <p>Instant rooms. Zero login. Just share & chat.</p>
 
-    <ul class="features">
-      <li>⚡ Real‑time chat with friends</li>
-      <li>🔗 Shareable private rooms</li>
-      <li>🚫 No login, no signup</li>
-      <li>🎨 Clean premium UI</li>
-      <li>🔔 Join & leave alerts</li>
-      <li>📱 Fully responsive</li>
-    </ul>
+<div class="welcome-card">
+  <h1>Friends Chat 💬</h1>
+  <p class="subtitle">
+    Create a private room, share the link, and start chatting instantly.
+    No login. No tracking. Just vibes.
+  </p>
 
-    <button id="createRoom">Create Chat Room</button>
+  <div class="feature-grid">
+    <div>⚡ Real-time messaging</div>
+    <div>😄 Emoji picker</div>
+    <div>❤️ Message reactions</div>
+    <div>⏰ Message timestamps</div>
+    <div>🔗 Shareable room link</div>
+    <div>📱 Mobile responsive</div>
+    <div>🚫 No signup</div>
+    <div>🔒 Private rooms</div>
   </div>
 
-  <script>
-    document.getElementById("createRoom").onclick = () => {
-      const room = Math.random().toString(36).substring(2, 8);
-      window.location.href = `chat.html?room=${room}`;
-    };
-  </script>
+  <div class="steps">
+    <div><span>1</span>Create a room</div>
+    <div><span>2</span>Share link</div>
+    <div><span>3</span>Chat instantly</div>
+  </div>
+
+  <button onclick="createRoom()">Create Chat Room</button>
+</div>
+
+<script>
+function createRoom() {
+  const room = Math.random().toString(36).slice(2,8);
+  location.href = "chat.html?room=" + room;
+}
+</script>
+
 </body>
 </html>
