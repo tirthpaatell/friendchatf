@@ -1,25 +1,29 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Chat Room</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Room</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="chat-container">
-  <header>
-    <span id="roomCode"></span>
-    <input id="roomLink" readonly>
-  </header>
+<body class="chat-body">
 
-  <div id="messages"></div>
+<header class="top-bar">
+  <span id="roomCode"></span>
+  <input id="roomLink" readonly>
+</header>
 
-  <form id="form">
-    <input id="message" placeholder="Type message..." autocomplete="off">
-    <button>Send</button>
-  </form>
+<main id="messages"></main>
+
+<div class="emoji-panel" id="emojiPanel">
+  😀 😍 😂 😭 😡 👍 👎 ❤️ 🔥 🎉 🤯
 </div>
+
+<form id="form" class="chat-input">
+  <button type="button" id="emojiBtn">😄</button>
+  <input id="message" placeholder="Type a message..." autocomplete="off">
+  <button>Send</button>
+</form>
 
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="script.js"></script>
