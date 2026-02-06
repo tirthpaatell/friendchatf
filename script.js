@@ -1,35 +1,78 @@
+const socket = io("YOUR_RENDER_BACKEND_URL");
 
-const socket = io("https://friendchatb.onrender.com");
-
-const params = new URLSearchParams(window.location.search);
-const room = params.get("room");
-const username = prompt("Enter your name") || "Guest";
+const room = new URLSearchParams(location.search).get("room");
+const username = prompt("Your name") || "Guest";
 
 socket.emit("join-room", { room, username });
 
-document.getElementById("roomCode").innerText = "Room: " + room;
-document.getElementById("roomLink").value =
-  window.location.origin + "/chat.html?room=" + room;
+roomCode.textContent = "Room: " + room;
+roomLink.value = location.origin + "/chat.html?room=" + room;
 
-const form = document.getElementById("form");
-const input = document.getElementById("message");
-const messages = document.getElementById("messages");
+emojiBtn.onclick = () => {
+  emojiPanel.classList.toggle("show");
+};
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  if (input.value.trim()) {
-    socket.emit("chat-message", username + ": " + input.value);
-    input.value = "";
+emojiPanel.onclick = (e) => {
+  if (e.target.textContent.trim()) {
+    message.value += e.target.textContent;
+    emojiPanel.classList.remove("show");
+    message.focus();
   }
+};
+
+form.onsubmit = e => {
+  e.preventDefault();
+  if (!message.value.trim()) return;
+
+  socket.emit("chat-message", {
+    id: Date.now(),
+    user: username,
+    text: message.value
+  });
+
+  message.value = "";
+};
+
+socket.on("chat-message", msg => {
+  addMessage(msg);
 });
 
-socket.on("chat-message", msg => addMsg(msg));
-socket.on("system", msg => addMsg("• " + msg, true));
+socket.on("system", msg => {
+  addSystem(msg);
+});
 
-function addMsg(msg, system=false) {
+socket.on("reaction", data => {
+  document.querySelector(`#msg-${data.id} .reactions`).textContent = data.reaction;
+});
+
+function addMessage(msg) {
   const div = document.createElement("div");
-  div.textContent = msg;
-  if(system) div.classList.add("system");
+  div.className = "bubble";
+  div.id = `msg-${msg.id}`;
+
+  div.innerHTML = `
+    <div class="text">${msg.user}: ${msg.text}</div>
+    <div class="meta">
+      <small>${msg.time}</small>
+      <div class="reactions">
+        <span onclick="react(${msg.id},'❤️')">❤️</span>
+        <span onclick="react(${msg.id},'😂')">😂</span>
+        <span onclick="react(${msg.id},'🔥')">🔥</span>
+        <span onclick="react(${msg.id},'👍')">👍</span>
+      </div>
+    </div>
+  `;
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
+}
+
+function addSystem(msg) {
+  const div = document.createElement("div");
+  div.className = "system";
+  div.textContent = `${msg.text} • ${msg.time}`;
+  messages.appendChild(div);
+}
+
+function react(id, emoji) {
+  socket.emit("reaction", { id, reaction: emoji });
 }
