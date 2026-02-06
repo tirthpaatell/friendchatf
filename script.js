@@ -64,3 +64,11 @@ socket.on("system", text => {
   div.textContent = text;
   messages.appendChild(div);
 });
+copyBtn.addEventListener("click", () => {
+  roomLink.select();
+  roomLink.setSelectionRange(0, 99999); // mobile support
+  navigator.clipboard.writeText(roomLink.value);
+
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2000);
+});
